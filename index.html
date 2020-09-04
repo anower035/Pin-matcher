@@ -12,38 +12,38 @@
         <div class="row">
             <div class="col-md-6">
                 <div class="pin-generator half-width">
-                    <input class="form-control" type="text">
-                    <button class="generate-btn">Generate Pin</button>
+                    <input class="form-control" type="text" id="pin">
+                    <button class="generate-btn" onclick="generatePin()">Generate Pin</button>
                 </div>
             </div>
             <div class="col-md-6">
                 <div class="input-section half-width">
-                    <input class="form-control" type="text">
+                    <input class="form-control" type="text"  id="display">
                     <div class="numbers">
                         <div class="calc-body">
                             <div class="calc-button-row">
-                              <div class="button">7</div>
-                              <div class="button">8</div>
-                              <div class="button">9</div>
+                              <div class="button" onclick="pinMatcher(7)">7</div>
+                              <div class="button" onclick="pinMatcher(8)">8</div>
+                              <div class="button" onclick="pinMatcher(9)">9</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">4</div>
-                              <div class="button">5</div>
-                              <div class="button">6</div>
+                              <div class="button" onclick="pinMatcher(4)">4</div>
+                              <div class="button" onclick="pinMatcher(5)">5</div>
+                              <div class="button" onclick="pinMatcher(6)">6</div>
                             </div>
                             <div class="calc-button-row">
-                              <div class="button">1</div>
-                              <div class="button">2</div>
-                              <div class="button">3</div>
+                              <div class="button" onclick="pinMatcher(1)">1</div>
+                              <div class="button" onclick="pinMatcher(2)">2</div>
+                              <div class="button" onclick="pinMatcher(3)">3</div>
                             </div>
                             <div class="calc-button-row">
-                                <div class="button"><</div>
-                                <div class="button">0</div>
-                                <div class="button">C</div>
+                                <div class="button" onclick="back()"><</div>
+                                <div class="button" onclick="pinMatcher(0)">0</div>
+                                <div class="button" onclick="clean()">C</div>
                             </div>
                             <div>
-                                <button type="submit" class="submit-btn">Submit</button>
-                                <p class="action-left">3 try left</p>
+                                <button type="submit" class="submit-btn" id="Submit">Submit</button>
+                                <p class="action-left"><span id="chances-left">3</span> try left</p>
                             </div>
                     </div>
                 </div>
@@ -54,5 +54,48 @@
             <p class="notify">✅ Pin Matched... Secret door is opening for you</p>
         </div>
     </div>
+    <script>
+        function pinMatcher(x) {
+            document.getElementById("display").value=document.getElementById("display").value+x;
+        }
+        function clean() {
+            document.getElementById("display").value=' ';
+        }
+        function back() {
+            var exp=document.getElementById("display").value;
+            document.getElementById("display").value=exp.substring(0,exp.length-1);
+        }
+        function generatePin() {
+            // var randomNum=Math.random()*9999;
+            // var nextNum=Math.round(randomNum);
+            var output=Math.floor(1000 + Math.random() * 9000)
+            document.getElementById('pin').value=output;
+        
+        }
+            const submitButton=document.getElementById('Submit');
+            submitButton.addEventListener("click",function(){
+             var A=document.getElementById('pin').value;
+             var B=document.getElementById('display').value;
+             var C=parseInt(document.getElementById('chances-left').innerText);
+             if ( A != B) {
+                  alert("❌ Pin did not match,Please try again");
+
+                  document.getElementById('pin').value=' ';
+                  document.getElementById('display').value=' ';
+                  if(C > 0){
+                    C=parseInt(document.getElementById('chances-left').innerText);
+                    document.getElementById('chances-left').innerText=C-1;
+                }
+             }
+            else{
+                  alert("✅ Pin Matched... Secret door is opening for you");
+                  
+                  document.getElementById('pin').value=' ';
+                  document.getElementById('display').value=' ';
+
+            }
+         }
+         )
+    </script>
 </body>
 </html>
